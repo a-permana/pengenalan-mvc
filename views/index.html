@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Antrian</title>
+
+    <style>
+        .antrian {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .txt-antrian {
+            font-size: 70px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="antrian">
+        <span id="txt-antrian" class="txt-antrian">
+            {{ .antrian }}
+        </span>
+    </div>
+
+    <!-- The core Firebase JS SDK is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/7.21.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.21.1/firebase-database.js"></script>
+
+    <!-- TODO: Add SDKs for Firebase products that you want to use
+      https://firebase.google.com/docs/web/setup#available-libraries -->
+
+    <script>
+        // Your web app's Firebase configuration
+        var firebaseConfig = {
+            apiKey: "",
+            authDomain: "",
+            databaseURL: "https://mvc-plus-golang.firebaseio.com",
+            projectId: "mvc-plus-golang",
+            storageBucket: "",
+            messagingSenderId: "1049213185345",
+            appId: ""
+        };
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+
+        var antrianRef = firebase.database().ref('antrian');
+        antrianRef.on('value', function (snapshot) {
+            const antrian = snapshot.val()
+            const currentAntrian = antrian.find(item => item != null && item.status === false)
+
+            document.getElementById('txt-antrian').innerText = currentAntrian.id
+        });
+    </script>
+</body>
+
+</html>
